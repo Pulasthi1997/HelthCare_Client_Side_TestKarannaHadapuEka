@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	<%@ page import="com.DoctorService" %>
+	<%@ page import="com.DoctorApi" %>
+	
 	<%@ page import="model.Doctor" %>
 	
-	<% 
+	<%-- 
 		//Save---------------------------------
 		if (request.getParameter("D_Name") != null) {
 			Doctor
@@ -39,7 +40,7 @@
 			stsMsg = d1.deleteDoctor(request.getParameter("hidDoctorIDDelete"));
 			session.setAttribute("statusMsg", stsMsg);
 		}
-	%>
+	--%>
 	
 	
 	
@@ -56,25 +57,25 @@
 <body>
 
 
-	<form id="formDoctor" name="formDoctor" method="post" action="Doctor_Insert.jsp">
-		Doctor name: <input id="D_Name" name="D_Name" type="text"
-			class="form-control form-control-sm" required> <br> 
+	<form id="formDoctor" name="formDoctor" method="post"  action="Doctor_Insert.jsp">
+		Doctor name: <input id="D_Name" name="D_Name" type="text" 
+			class="form-control form-control-sm" > <br> 
 			
-		Doctor Type: <input id="D_Type" name="D_Type" type="text"
-			class="form-control form-control-sm" required> <br> 
+		Doctor Type: <input id="D_Type" name="D_Type" type="text" 
+			class="form-control form-control-sm" > <br> 
 			
 		Contact	Number: <input id="D_Contact_Number" name="D_Contact_Number"
-			type="text"   placeholder="0xxxxxxxxx" maxlength="10"
-			 pattern="^\d{10}$"  class="form-control form-control-sm" required> <br>
+			type="text"   
+		  class="form-control form-control-sm" > <br>
 			
-		Address: <input id="D_Address" name="D_Address" type="text"
-			class="form-control form-control-sm" required> <br> 
+		Address: <input id="D_Address" name="D_Address" type="text" 
+			class="form-control form-control-sm" > <br> 
 			
-		Email: <input id="D_Email" name="D_Email" type="text"
-			class="form-control form-control-sm" required> <br> 
+		Email: <input id="D_Email" name="D_Email" type="text" 
+			class="form-control form-control-sm" > <br> 
 			
-		Hospital ID: <input	id="Hospital_ID" name="Hospital_ID" type="text"
-			class="form-control form-control-sm"required> <br> 
+		Hospital ID: <input	id="Hospital_ID" name="Hospital_ID" type="text" 
+			class="form-control form-control-sm" > <br> 
 			
 			<input id="btnSave" name="btnSave" type="submit" value="Save" class="btn btn-primary"> 
 			
@@ -82,28 +83,29 @@
 	</form>
 	
 	
-	<div id"alertSuccess" class="alert alert-success">
-		<%
-		out.print(session.getAttribute("statusMsg"));
-		%>
+	<div id="alertSuccess" class="alert alert-success">
+		<%--
+			out.print(session.getAttribute("statusMsg"));
+		--%>
 		</div>
-	
-	
-	
-
+		<div id="alertError" class="alert alert-danger"></div>
+		
+     <div id="divItemsGrid">
 	<% 
 	     Doctor d1=new Doctor();
 	     out.print(d1.readDoctors());
 	     %>
+	   </div>
+	     
+	     <br><br><br>
 	     
 	     
-	     <br><br>
+	 
 	     
-	     
-	    
-	     
-	     
-	     
+	   <br><br><br>  
 	     
 </body>
 </html>
+	
+	
+	

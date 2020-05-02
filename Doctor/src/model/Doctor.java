@@ -2,6 +2,8 @@ package model;
 
 import java.sql.*;
 
+import com.google.gson.JsonObject;
+
 import database.dbconnect;
 
 public class Doctor {
@@ -34,12 +36,26 @@ public class Doctor {
 //execute the statement
 
 			preparedStmt.execute();
-			con.close();
+			/*con.close();
 			output = "Inserted successfully created ";
 		} catch (Exception e) {
 			output = "Error while inserting the doctor.";
 			System.err.println(e.getMessage());
 		}
+		return output;*/
+       con.close();
+			
+			String newDoctors = readDoctors();
+			output = "{\"status\":\"success\", \"data\": \"" +newDoctors + "\"}";
+		}
+		catch (Exception e)
+		{
+			output = "{\"status\":\"error\", \"data\": \"Error while inserting the Doctor.\"}";
+			System.err.println(e.getMessage());
+		}
+		System.out.println(output);
+		
+		
 		return output;
 	}
 
@@ -76,11 +92,15 @@ public class Doctor {
 				output += "<td>" + D_Email + "</td>";
 				output += "<td>" + Hospital_ID + "</td>";
 // buttons
-				output += "<td><input name=\"btnUpdate\" type=\"button\"value=\"Update\" class=\"btn btn-warning btnUpdate\"></td>"
+				/*output += "<td><input name=\"btnUpdate\" type=\"button\"value=\"Update\" class=\"btn btn-warning btnUpdate\"></td>"
 						+ "<td><form method=\"post\" action=\"Doctor_Insert.jsp\">"
 						+ "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"class=\"btn btn-danger\">"
 						+ "<input name=\"hidDoctorIDDelete\" type=\"hidden\" value=\"" + Doctor_ID + "\">"
-						+ "</form></td></tr>";
+						+ "</form></td></tr>";*/
+				output += "<td><input name='btnUpdate'type='button' "
+						+ "value='Update'class='btnUpdate btn btn-secondary'></td>"
+						+ "<td><input name='btnRemove'type='button' "
+						+ "value='Remove'class='btnRemove btn btn-danger'data-itemid='"+ Doctor_ID + "'>" + "</td></tr>";
 			}
 			con.close();
 //Complete the html table
@@ -113,12 +133,26 @@ public class Doctor {
 			preparedStmt.setInt(7, Integer.parseInt(ID));
 			// execute the statement
 			preparedStmt.execute();
-			con.close();
+			/*con.close();
 			output = "Updated successfully done";
 		} catch (Exception e) {
 			output = "Error while updating the doctor.";
 			System.err.println(e.getMessage());
 		}
+		return output;
+	}
+	*/
+con.close();
+			
+			String newDoctors = readDoctors();
+			output = "{\"status\":\"success\", \"data\": \"" + newDoctors + "\"}";
+		}
+		catch (Exception e)
+		{
+			output = "{\"status\":\"error\", \"data\": \"Error while updating the Doctor.\"}";
+			System.err.println(e.getMessage());
+		}
+		
 		return output;
 	}
 
@@ -136,13 +170,26 @@ public class Doctor {
 			preparedStmt.setInt(1, Integer.parseInt(Doctor_ID));
 // execute the statement
 			preparedStmt.execute();
-			con.close();
+			/*con.close();
 			output = "Deleted successfully";
 		} catch (Exception e) {
 			output = "Error while deleting the doctor.";
 			System.err.println(e.getMessage());
 		}
 		return output;
-	}
+	}*/
+con.close();
+			
+			String newDoctors = readDoctors();
+			output = "{\"status\":\"success\", \"data\": \"" + newDoctors + "\"}";
+		}
+		catch (Exception e)
+		{
+			output = "{\"status\":\"error\", \"data\": \"Error while deleting the Doctor.\"}";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;
+	}		
 
 }
