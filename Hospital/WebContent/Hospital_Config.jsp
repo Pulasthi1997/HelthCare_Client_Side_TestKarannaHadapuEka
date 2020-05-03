@@ -99,8 +99,7 @@ tr:nth-child(even) {
 	     %>
 	   </div>
 	  
-	   
-
+	  
 		
 </body>
 </html>
