@@ -139,30 +139,20 @@ function validateHospitalForm()
         return "Insert Hospital Name.";
     }
     
-    // NAME
+    // Contact number
     if ($("#H_contactNumber").val().trim() == "")
     {
         return "Insert Hospital contact Number.";
     }
     
-    //PRICE-------------------------------
+    //Address-------------------------------
     if ($("#H_address").val().trim() == "")
     {
         return "Insert Hospital Address.";
     }
     
-    // is numerical value
-    var tmpPrice = $("#H_address").val().trim();
     
-    if (!$.isNumeric(tmpPrice))
-    {
-        return "Insert a numerical value for Item Price.";
-    }
-    
-    // convert to decimal price
-    $("#H_address").val(parseFloat(tmpPrice).toFixed(2));
-    
-    // DESCRIPTION------------------------
+    // Email------------------------
     if ($("#H_email").val().trim() == "")
     {
         return "Insert Hospital Email.";
