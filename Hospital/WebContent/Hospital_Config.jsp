@@ -81,6 +81,7 @@
 		out.print(h1.readHospital());
 	     %>
 	   </div>
+	   
 
 		
 </body>
