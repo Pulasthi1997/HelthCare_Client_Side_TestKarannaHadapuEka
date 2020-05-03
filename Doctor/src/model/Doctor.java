@@ -82,6 +82,8 @@ public class Doctor {
 				String D_Address = rs.getString("D_Address");
 				String D_Email = rs.getString("D_Email");
 				String Hospital_ID = rs.getString("Hospital_ID");
+				D_Name=D_Name.replace('+', ' ');
+				D_Email=D_Email.replaceAll("%40","@");
 
 				// Add into the html table
 				output += "<tr><td><input id=\'hidDoctorIDUpdate\'name=\'hidDoctorIDUpdate\'type=\'hidden\' value=\'"
