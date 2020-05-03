@@ -54,6 +54,10 @@ tr:nth-child(even) {
   </style>
 </head>
 <body>
+	<div class="jumbotron text-center" style="padding: 10px;;">
+		<h1>Hospital Registration and Update Form</h1>
+	
+	</div>
 	<div class="container">
 		<div class="row"><div class="col-md-3"></div>
 			<div class="col-md-6">
