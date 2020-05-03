@@ -1,6 +1,7 @@
 package com;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -62,7 +63,10 @@ public class HospitalAPI extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("put method.............................");
 		// TODO Auto-generated method stub
+		
          Map paras = getParasMap(request);
+         
+         
 		
 		String output = HospitalObj.updateHopital(paras.get("hidHospitalIDSave").toString(),
 										   paras.get("H_name").toString(),
@@ -79,6 +83,8 @@ public class HospitalAPI extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		          // TODO Auto-generated method stub
         Map paras = getParasMap(request);
+        
+      
 		
 		String output = HospitalObj.deleteHospital(paras.get("H_ID").toString());
 		
@@ -86,29 +92,23 @@ public class HospitalAPI extends HttpServlet {
 	}
 	
 	
-	private static Map getParasMap(HttpServletRequest request)
-	{
-		Map<String, String> map = new HashMap<String, String>();
-		
-		try
-		{
-			Scanner scanner = new Scanner(request.getInputStream(), "UTF-8");
-			String queryString = scanner.hasNext() ? scanner.useDelimiter("\\A").next() : "";
-			scanner.close();
-			
-			String[] params = queryString.split("&");
-			
-			for (String param : params)
-			{
-				String[] p = param.split("=");
-				map.put(p[0], p[1]);
-			}
-		}
-		catch (Exception e)
-		{
-		}
-		
-		return map;
-	}
+	
+	  private static Map getParasMap(HttpServletRequest request) { Map<String,
+	  String> map = new HashMap<String, String>();
+	  
+	  try { Scanner scanner = new Scanner(request.getInputStream(), "UTF-8");
+	  String queryString = scanner.hasNext() ? scanner.useDelimiter("\\A").next() :
+	  ""; scanner.close();
+	  
+	  String[] params = queryString.split("&");
+	  
+	  for (String param : params) { String[] p = param.split("="); map.put(p[0],
+	  p[1]); } } catch (Exception e) { }
+	  
+	  return map; }
+	 
+	
+	
 
+	
 }

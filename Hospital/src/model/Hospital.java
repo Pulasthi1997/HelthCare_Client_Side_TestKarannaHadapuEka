@@ -68,6 +68,15 @@ public class Hospital {
 				String H_contactNumber = rs.getString("H_contactNumber");
 				String H_address = rs.getString("H_address");
 				String H_email = rs.getString("H_email");
+				
+				//Replacing spaces in Hospital name
+				H_name=H_name.replace('+', ' ');
+				//Replacing spaces,commas and slashes in Hospital address
+				H_address=H_address.replace('+', ' ');
+				H_address=H_address.replaceAll("%2C",",");
+				H_address=H_address.replaceAll("%2F","/");
+				//Replacing @ in Hospital email
+				H_email=H_email.replaceAll("%40","@");
 
 				// Add into the html table
 				output += "<tr><td><input id=\'hidHospitalIDUpdate\'name=\'hidHospitalIDUpdate\'type=\'hidden\' value=\'"
@@ -103,7 +112,7 @@ public class Hospital {
 	}
 
 	public String updateHopital(String ID, String hName, String contactNo, String address, String email) {
-		
+		System.out.println(hName);
 		String output = "";
 		try {
 			Connection con = obj.connect();
