@@ -30,11 +30,15 @@ public class Hospital {
 			preparedStmt.setString(2, contactNo);
 			preparedStmt.setString(3, address);
 			preparedStmt.setString(4, email);
+			
+			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Inserted successfully";
+			String newHospitals = readHospital();
+			output = "{\"status\":\"success\", \"data\": \"" +newHospitals+ "\"}";
+			
 		} catch (Exception e) {
-			output = "Error while inserting the Hospitals.";
+			output = "{\"status\":\"error\", \"data\": \"Error while inserting the Hospital.\"}";
 			System.err.println(e.getMessage());
 		}
 		return output;
@@ -49,8 +53,11 @@ public class Hospital {
 			}
 			//retriew Hospital details
 			// Prepare the html table to be displayed
-			output = "<table border=\"1\">" + "<th>Hospital Name</th" + "><th>Contatct No</th>" + "<th>Address</th>"
-					+ "<th>E-mail</th>" + "<th>Update</th>" + "<th>Remove</th></tr>";
+			//output = "<table border=\'1\">" + "<th>Hospital Name</th" + "><th>Contatct No</th>" + "<th>Address</th>"
+					//+ "<th>E-mail</th>" + "<th>Update</th>" + "<th>Remove</th></tr>";
+			
+			output = "<table border='1'><tr><th>Hospital Name</th><th>Contact No</th><th>"
+					+ "Address</th><th>Email</th>><th>Update</th><th>Remove</th></tr>";
 			String query = "select * from hospital";
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
@@ -63,19 +70,27 @@ public class Hospital {
 				String H_email = rs.getString("H_email");
 
 				// Add into the html table
-				output += "<tr><td><input id=\"hidHospitalIDUpdate\"name=\"hidHospitalIDUpdate\"type=\"hidden\" value=\""
-						+ H_ID + "\">" + H_name + "</td>";
+				output += "<tr><td><input id=\'hidHospitalIDUpdate\'name=\'hidHospitalIDUpdate\'type=\'hidden\' value=\'"
+						+ H_ID + "\'>" + H_name + "</td>";
 				output += "<td>" + H_contactNumber + "</td>";
 				output += "<td>" + H_address + "</td>";
 				output += "<td>" + H_email + "</td>";
 
 				// buttons
-				output += "<td><input name=\"btnUpdate\" type=\"submit\"value=\"Update\" class=\"btn btn-warning btnUpdate\"></td>"
-						+ "<td><form method=\"post\" action=\"Hospital_Config.jsp\">"
-						+ "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"class=\"btn btn-danger\">"
-						+ "<input name=\"hidHospitalIDDelete\" type=\"hidden\" value=\"" + H_ID + "\">"
-						+ "</form></td></tr>";
-				// 1233
+				/*
+				 * output +=
+				 * "<td><input name=\"btnUpdate\" type=\"submit\"value=\"Update\" class=\"btn btn-warning btnUpdate\"></td>"
+				 * + "<td><form method=\"post\" action=\"Hospital_Config.jsp\">" +
+				 * "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"class=\"btn btn-danger\">"
+				 * + "<input name=\"hidHospitalIDDelete\" type=\"hidden\" value=\"" + H_ID +
+				 * "\">" + "</form></td></tr>";
+				 */
+				
+				output += "<td><input name='btnUpdate'type='button' "
+						+ "value='Update'class='btnUpdate btn btn-secondary'></td>"
+						+ "<td><input name='btnRemove'type='button' "
+						+ "value='Remove'class='btnRemove btn btn-danger'data-hospitalid='"+ H_ID + "'>" + "</td></tr>";
+				
 			}
 			con.close();
 			// Complete the html table
@@ -108,9 +123,10 @@ public class Hospital {
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Hospital Details Updated successfully";
+			String newHospitals = readHospital();
+			output = "{\"status\":\"success\", \"data\": \"" +newHospitals+ "\"}";
 		} catch (Exception e) {
-			output = "Error while updating the Hospital.";
+			output = "{\"status\":\"error\", \"data\": \"Error while updating the Hospitals.\"}";
 			System.err.println(e.getMessage());
 		}
 		return output;
@@ -132,10 +148,11 @@ public class Hospital {
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = " Hospital Deleted successfully";
+			String newHospitals = readHospital();
+			output = "{\"status\":\"success\", \"data\": \"" +newHospitals+ "\"}";
 		} catch (Exception e) {
-			output = "Doctors Are Registered to this Hospital.";
-			System.err.println(e.getMessage());
+			output = "{\"status\":\"error\", \"data\": \"Error while deleting the Hospitals.\"}";
+			System.err.println(e.toString());
 		}
 		return output;
 	}

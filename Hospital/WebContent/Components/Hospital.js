@@ -1,53 +1,172 @@
-$(document).ready(function() {
-	if ($("#alertSuccess").text().trim() == "") {
-		$("#alertSuccess").hide();
-	}
-	$("#alertError").hide();
+$(document).ready(function()
+{
+    if ($("#alertSuccess").text().trim() == "")
+    {
+        $("#alertSuccess").hide();
+    }
+    
+    $("#alertError").hide();
 });
-// SAVE ============================================
-$(document).on("click", "#btnSave", function(event) {
-	// Clear alerts---------------------
-	$("#alertSuccess").text("");
-	$("#alertSuccess").hide();
-	$("#alertError").text("");
-	$("#alertError").hide();
-	// Form validation-------------------
-	var status = validateHospitalForm();
-	if (status != true) {
-		$("#alertError").text(status);
-		$("#alertError").show();
-		return;
-	}
-	// If valid------------------------
-	$("#formHospital").submit();
-});
-// UPDATE==========================================
-$(document).on("click",".btnUpdate",function(event) {
-			$("#hidHospitalIDSave").val($(this).closest("tr").find('#hidHospitalIDUpdate').val());
-			$("#H_name").val($(this).closest("tr").find('td:eq(0)').text());
-			$("#H_contactNumber").val($(this).closest("tr").find('td:eq(1)').text());
-			$("#H_address").val($(this).closest("tr").find('td:eq(2)').text());
-			$("#H_email").val($(this).closest("tr").find('td:eq(3)').text());
-		});
-// CLIENTMODEL=========================================================================
-function validateHospitalForm() {
-	// CODE
-	if ($("#H_name").val().trim() == "") {
-		return "Insert Hospital name.";
-	}
-	// NAME
-	if ($("#H_contactNumber").val().trim() == "") {
-		return "Insert Hospital Contact Number.";
-	}
-	// PRICE-------------------------------
 
-	if ($("#H_address").val().trim() == "") {
-		return "Insert Hospital Address.";
-	}
-	
-	if ($("#H_email").val().trim() == "") {
-		return "Insert Hospital email.";
-	}
-	return true;
+//SAVE ============================================
+$(document).on("click", "#btnSave", function(event)
+{
+    // Clear alerts---------------------
+    $("#alertSuccess").text("");
+    $("#alertSuccess").hide();
+    $("#alertError").text("");
+    $("#alertError").hide();
+    
+    // Form validation-------------------
+    var status = validateHospitalForm();
+    
+    if (status != true)
+    {
+        $("#alertError").text(status);
+        $("#alertError").show();
+        return;
+    }
+    
+    // If valid------------------------
+    var method = ($("#hidHospitalIDSave").val() == "") ? "POST" : "PUT";
+    
+    $.ajax(
+    {
+        url : "HospitalAPI",
+        type : method,
+        data : $("#formHospital").serialize(),
+        dataType : "text",
+        complete : function(response, status)
+        {
+            onHospitalSaveComplete(response.responseText, status);
+        }
+    });
+});
+
+//UPDATE==========================================
+$(document).on("click", ".btnUpdate", function(event)
+{
+    $("#hidHospitalIDSave").val($(this).closest("tr").find('#hidHospitalIDUpdate').val());
+    $("#H_name").val($(this).closest("tr").find('td:eq(0)').text());
+    $("#H_contactNumber").val($(this).closest("tr").find('td:eq(1)').text());
+    $("#H_address").val($(this).closest("tr").find('td:eq(2)').text());
+    $("#H_email").val($(this).closest("tr").find('td:eq(3)').text());
+});
+
+function onHospitalSaveComplete(response, status)
+{
+    if (status == "success")
+    {
+        var resultSet = JSON.parse(response);
+        if (resultSet.status.trim() == "success")
+        {
+            $("#alertSuccess").text("Successfully saved.");
+            $("#alertSuccess").show();
+            $("#divItemsGrid").html(resultSet.data);
+        } 
+        else if (resultSet.status.trim() == "error")
+        {
+            $("#alertError").text(resultSet.data);
+            $("#alertError").show();
+        }
+    } 
+    else if (status == "error")
+    {
+        $("#alertError").text("Error while saving.");
+        $("#alertError").show();
+    } 
+    else
+    {
+        $("#alertError").text("Unknown error while saving..");
+        $("#alertError").show();
+    }
+    
+    $("#hidHospitalIDSave").val("");
+    $("#formHospital")[0].reset();
 }
 
+$(document).on("click", ".btnRemove", function(event)
+{
+    $.ajax(
+    {
+        url : "HospitalAPI",
+        type : "DELETE",
+        data : "H_ID=" + $(this).data("hospitalid"),
+        dataType : "text",
+        complete : function(response, status)
+        {
+            onHospitalDeleteComplete(response.responseText, status);
+        }
+    });
+});
+
+function onHospitalDeleteComplete(response, status)
+{
+    if (status == "success")
+    {
+        var resultSet = JSON.parse(response);
+        
+        if (resultSet.status.trim() == "success")
+        {
+            $("#alertSuccess").text("Successfully deleted.");
+            $("#alertSuccess").show();
+            $("#divItemsGrid").html(resultSet.data);
+        } 
+        else if (resultSet.status.trim() == "error")
+        {
+            $("#alertError").text(resultSet.data);
+            $("#alertError").show();
+        }
+    } 
+    else if (status == "error")
+    {
+        $("#alertError").text("Error while deleting.");
+        $("#alertError").show();
+    } 
+    else
+    {
+        $("#alertError").text("Unknown error while deleting..");
+        $("#alertError").show();
+    }
+}
+
+
+function validateHospitalForm()
+{
+	// NAME
+    if ($("#H_name").val().trim() == "")
+    {
+        return "Insert Hospital Name.";
+    }
+    
+    // NAME
+    if ($("#H_contactNumber").val().trim() == "")
+    {
+        return "Insert Hospital contact Number.";
+    }
+    
+    //PRICE-------------------------------
+    if ($("#H_address").val().trim() == "")
+    {
+        return "Insert Hospital Address.";
+    }
+    
+    // is numerical value
+    var tmpPrice = $("#H_address").val().trim();
+    
+    if (!$.isNumeric(tmpPrice))
+    {
+        return "Insert a numerical value for Item Price.";
+    }
+    
+    // convert to decimal price
+    $("#H_address").val(parseFloat(tmpPrice).toFixed(2));
+    
+    // DESCRIPTION------------------------
+    if ($("#H_email").val().trim() == "")
+    {
+        return "Insert Hospital Email.";
+    }
+    
+    return true;
+}

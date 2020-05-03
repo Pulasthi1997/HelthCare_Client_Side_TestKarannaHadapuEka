@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page import="model.Hospital" %>
+    <%@ page import="com.HospitalAPI" %>
     
     
-<%	
+<%-- <%	
 	if (request.getParameter("H_name") != null) {
 		Hospital Hospital_1 = new Hospital();
-		String
+		
 		stsMsg = "";
 		
 		//Insert--------------------------
@@ -34,7 +35,7 @@
 				.getParameter("hidHospitalIDDelete"));
 		session.setAttribute("statusMsg", stsMsg);
 	}
-%>	
+%>	 --%>
     
 <!DOCTYPE html>
 <html>
@@ -60,24 +61,26 @@
 		E-mail:
 		 <input id="H_email" name="H_email" type="text"  
 			class="form-control form-control-sm" required> <br> 
-		<input id="btnSave" name="btnSave" type="submit" value="Save" 
+		<input id="btnSave" name="btnSave" type="button" value="Save" 
 			class="btn btn-primary"  > 
 		<input type="hidden" id="hidHospitalIDSave" name="hidHospitalIDSave" value="">
 	</form>
 
-	<div id"alertSuccess" class="alert alert-success">
-		<%
+
+	
+	<div id="alertSuccess" class="alert alert-success">
+		<%--
 			out.print(session.getAttribute("statusMsg"));
-		%>
-
-	</div>
-
-	<%
-	 Hospital h1= new Hospital();
-	out.print(h1.readHospital());
-	%>
-		<script language="javascript">
-
+		--%>
+		</div>
+		<div id="alertError" class="alert alert-danger"></div>
+		
+     <div id="divItemsGrid">
+	<% 
+	      Hospital h1= new Hospital();
+		out.print(h1.readHospital());
+	     %>
+	   </div>
 
 		
 </body>
