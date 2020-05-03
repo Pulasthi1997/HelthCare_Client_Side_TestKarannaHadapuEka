@@ -47,7 +47,7 @@ public class DoctorApi extends HttpServlet {
 				   request.getParameter("D_Email"),
 				   
 				   request.getParameter("Hospital_ID"));
-		System.out.println("fefefefefefefef "+output);
+		
 		
 					
 		//response.setContentType("text/html");

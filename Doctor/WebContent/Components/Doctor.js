@@ -25,27 +25,55 @@ if (status != true)
 // If valid------------------------
  //$("#formDoctor").submit();
 //});
-var method = ($("#hidDoctorIDSave").val() == "") ? "POST" : "PUT";
+var type = ($("#hidDoctorIDSave").val() == "") ? "POST" : "PUT";
 
 $.ajax(
 {
 	url : "DoctorApi",
-	type : method,
+	type : type,
 	data : $("#formDoctor").serialize(),
 	dataType : "text",
-
 	complete : function(response, status)
 	{
-		window.alert(response.responseText);
+		
 		onDoctorSaveComplete(response.responseText, status);
 	}
 });
 });
 
-// UPDATE===========================================
+
+function onDoctorSaveComplete(response, status)
+{
+	if (status == "success")
+	{
+		var resultSet = JSON.parse(response);
+ 
+		if (resultSet.status.trim() == "success")
+		{
+			$("#alertSuccess").text("Successfully saved.");
+			$("#alertSuccess").show();
+			$("#divItemsGrid").html(resultSet.data);
+		} else if (resultSet.status.trim() == "error")
+		{
+			$("#alertError").text(resultSet.data);
+			$("#alertError").show();
+		}
+	} else if (status == "error")
+	{
+		$("#alertError").text("Error while saving.");
+		$("#alertError").show();
+	} else
+	{
+		$("#alertError").text("Unknown error while saving..");
+		$("#alertError").show();
+	}
+	$("#hidDoctorIDSave").val("");
+	$("#formDoctor")[0].reset();
+}
+//UPDATE===========================================
 $(document).on("click", ".btnUpdate", function(event)
 {
-	//window.alert("bjgnjrgnjrgnjrgnjrgnjrgjnrgnjnj");
+	
  $("#hidDoctorIDSave").val($(this).closest("tr").find('#hidDoctorIDUpdate').val());
  $("#D_Name").val($(this).closest("tr").find('td:eq(0)').text());
  $("#D_Type").val($(this).closest("tr").find('td:eq(1)').text());
@@ -54,41 +82,8 @@ $(document).on("click", ".btnUpdate", function(event)
  $("#D_Email").val($(this).closest("tr").find('td:eq(4)').text());
  $("#Hospital_ID").val($(this).closest("tr").find('td:eq(5)').text());
 });
-function onDoctorSaveComplete(response, status)
-{
-	console.log("ststus: " + status);
-	if (status == "success")
-	{
-		var resultSet = JSON.parse(response);
-		if (resultSet.status.trim() == "success")
-		{
-			window.alert("success.......................");
-			$("#alertSuccess").text("Successfully saved.");
-			$("#alertSuccess").show();
-			$("#divItemsGrid").html(resultSet.data);
-		} 
-		else if (resultSet.status.trim() == "error")
-		{
-			window.alert("error.......................");
-			$("#alertError").text(resultSet.data);
-			$("#alertError").show();
-		}
-	} 
-	else if (status == "error")
-	{
-		$("#alertError").text("Error while saving.");
-		$("#alertError").show();
-	} 
-	else
-	{
-		$("#alertError").text("Unknown error while saving..");
-		$("#alertError").show();
-	}
-	
-	$("#hidDoctorIDSave").val("");
-	$("#formDoctor")[0].reset();
-	location.reload();
-}
+//llllllll
+
 $(document).on("click", ".btnRemove", function(event)
 		{
 			$.ajax(

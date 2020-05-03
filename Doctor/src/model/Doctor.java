@@ -46,14 +46,14 @@ public class Doctor {
        con.close();
 			
 			String newDoctors = readDoctors();
-			output = "{\"status\":\"success\", \"data\": \"" +newDoctors + "\"}";
+			output = "{\"status\":\"success\", \"data\": \"" + newDoctors + "\"}";
 		}
 		catch (Exception e)
 		{
 			output = "{\"status\":\"error\", \"data\": \"Error while inserting the Doctor.\"}";
 			System.err.println(e.getMessage());
 		}
-		System.out.println(output);
+		
 		
 		
 		return output;
@@ -67,7 +67,7 @@ public class Doctor {
 				return "Error while connecting to the database for reading.";
 			}
 // Prepare the html table to be displayed
-			output = "<table border=\"1\"><tr><th>Doctor Name</th><th>Doctor specification</th><th>"
+			output = "<table border='1'><tr><th>Doctor Name</th><th>Doctor specification</th><th>"
 					+ "Contact Number</th><th>Doctor Address</th><th>Doctor Email </th><th>Doctor hospitalID</th><th>Update</th><th>Remove</th></tr>";
 			String query = "select * from doctor";
 			Statement stmt = con.createStatement();
@@ -84,8 +84,8 @@ public class Doctor {
 				String Hospital_ID = rs.getString("Hospital_ID");
 
 				// Add into the html table
-				output += "<tr><td><input id=\"hidDoctorIDUpdate\"name=\"hidDoctorIDUpdate\"type=\"hidden\" value=\""
-						+ Doctor_ID + "\">" + D_Name + "</td>";
+				output += "<tr><td><input id=\'hidDoctorIDUpdate\'name=\'hidDoctorIDUpdate\'type=\'hidden\' value=\'"
+						+ Doctor_ID + "\'>" + D_Name + "</td>";
 				output += "<td>" + D_Type + "</td>";
 				output += "<td>" + D_Contact_Number + "</td>";
 				output += "<td>" + D_Address + "</td>";
