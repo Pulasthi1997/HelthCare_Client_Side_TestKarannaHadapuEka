@@ -145,6 +145,18 @@ function validateHospitalForm()
         return "Insert Hospital contact Number.";
     }
     
+    // Check for numeric value
+	var phone = $("#H_contactNumber").val().trim();
+	if (!$.isNumeric(phone)) {
+		return "Insert a correct conatct number (don't insert characters)";
+	}
+	
+	// check for length
+	var pattern = /^\d{10}$/;
+	if (!pattern.test(phone)) {
+		return "Contact number should have 10 numbers";
+	}
+    
     //Address-------------------------------
     if ($("#H_address").val().trim() == "")
     {
@@ -153,10 +165,18 @@ function validateHospitalForm()
     
     
     // Email------------------------
-    if ($("#H_email").val().trim() == "")
-    {
-        return "Insert Hospital Email.";
-    }
+    
+    if ($("#H_email").val().trim() == "") {
+		return "Insert Email.";
+	}
+
+	var re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	var email = $("#H_email").val().trim();
+	if (re.test(email) == false) {
+		return "Please enter valid email address";
+	}
+    
+    
     
     return true;
 }
