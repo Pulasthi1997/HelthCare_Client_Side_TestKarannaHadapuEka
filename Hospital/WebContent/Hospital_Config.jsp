@@ -3,40 +3,6 @@
     <%@ page import="model.Hospital" %>
     <%@ page import="com.HospitalAPI" %>
     
-    
-<%-- <%	
-	if (request.getParameter("H_name") != null) {
-		Hospital Hospital_1 = new Hospital();
-		
-		stsMsg = "";
-		
-		//Insert--------------------------
-		if (request.getParameter("hidHospitalIDSave") == "") {
-			stsMsg = Hospital_1.insertHospital(request.getParameter("H_name"),
-					request.getParameter("H_contactNumber"), request
-							.getParameter("H_address"), request
-							.getParameter("H_email"));
-		} else//Update----------------------
-		{
-			stsMsg = Hospital_1.updateHopital(request.getParameter("hidHospitalIDSave"),
-							request.getParameter("H_name"), request
-									.getParameter("H_contactNumber"), request
-									.getParameter("H_address"), request
-									.getParameter("H_email"));
-		}
-		session.setAttribute("statusMsg", stsMsg);
-	}
-	//Delete--------------------------------
-	if (request.getParameter("hidHospitalIDDelete") != null) {
-		Hospital
-		Hospital_1 = new Hospital();
-		String
-		stsMsg = Hospital_1.deleteHospital(request
-				.getParameter("hidHospitalIDDelete"));
-		session.setAttribute("statusMsg", stsMsg);
-	}
-%>	 --%>
-    
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,9 +12,53 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="./Components/Hospital.js"></script>
+  <style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+.card{
+	padding: 20px;
+	border: 1px solid black;
+	border-radius: 10px;
+	margin-bottom: 20px;
+	font-size: 15px;
+	margin-top: 15px;
+}
+#btnSave{
+	margin-top: 15px;
+	font-size: px;
+	width: 100%;
+}
+.alert{
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 15px;
+	text-align: center;
+}
+
+  </style>
 </head>
 <body>
-	<form id="formHospital" name="formHospital" method="post" action="Hospital_Config.jsp">
+	<div class="container">
+		<div class="row"><div class="col-md-3"></div>
+			<div class="col-md-6">
+				<div class="card">
+	<form  id="formHospital" name="formHospital" method="post" action="Hospital_Config.jsp">
 		Hospital Name: 
 		<input id="H_name" name="H_name" type="text"
 			class="form-control form-control-sm" required> <br>
@@ -65,13 +75,16 @@
 			class="btn btn-primary"  > 
 		<input type="hidden" id="hidHospitalIDSave" name="hidHospitalIDSave" value="">
 	</form>
-
+	</div>
+</div>
+</div>
+</div>
 
 	
 	<div id="alertSuccess" class="alert alert-success">
-		<%--
-			out.print(session.getAttribute("statusMsg"));
-		--%>
+	
+			
+		
 		</div>
 		<div id="alertError" class="alert alert-danger"></div>
 		

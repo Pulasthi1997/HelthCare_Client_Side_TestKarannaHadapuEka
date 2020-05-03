@@ -133,13 +133,13 @@ function onHospitalDeleteComplete(response, status)
 
 function validateHospitalForm()
 {
-	// NAME
+	//Hospital  NAME---------------------------
     if ($("#H_name").val().trim() == "")
     {
         return "Insert Hospital Name.";
     }
     
-    // Contact number
+    // Phone Number-------------------------------
     if ($("#H_contactNumber").val().trim() == "")
     {
         return "Insert Hospital contact Number.";

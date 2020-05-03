@@ -57,7 +57,7 @@ public class Hospital {
 					//+ "<th>E-mail</th>" + "<th>Update</th>" + "<th>Remove</th></tr>";
 			
 			output = "<table border='1'><tr><th>Hospital Name</th><th>Contact No</th><th>"
-					+ "Address</th><th>Email</th>><th>Update</th><th>Remove</th></tr>";
+					+ "Address</th><th>Email</th><th>Update</th><th>Remove</th></tr>";
 			String query = "select * from hospital";
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
